@@ -29,9 +29,9 @@
 		template<class _Other>							doug_lea_alloc	(const doug_lea_alloc<_Other>&)			{	}
 		template<class _Other>	doug_lea_alloc<T>&		operator=		(const doug_lea_alloc<_Other>&)			{	return (*this);	}
 								pointer					allocate		(size_type n, const void* p=0) const	{	return (T*)dlmalloc(sizeof(T)*(u32)n);	}
-								char _FARQ *			_Charalloc		(size_type n)							{	return (char _FARQ *)allocate(n); }
+								char *			_Charalloc		(size_type n)									{	return (char *)allocate(n); }
 								void					deallocate		(pointer p, size_type n) const			{	dlfree	(p);				}
-								void					deallocate		(void _FARQ* p, size_type n) const		{	dlfree	(p);				}
+								void					deallocate		(void * p, size_type n) const		{	dlfree	(p);				}
 								void					construct		(pointer p, const T& _Val)				{	std::_Construct(p, _Val);	}
 								void					destroy			(pointer p)								{	std::_Destroy(p);			}
 								size_type				max_size		() const								{	size_type _Count = (size_type)(-1) / sizeof (T);	return (0 < _Count ? _Count : 1);	}

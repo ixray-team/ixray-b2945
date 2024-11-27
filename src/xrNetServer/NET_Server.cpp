@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include "dxerr9.h"
 #include "net_server.h"
 
 #include "NET_Log.h"
@@ -200,8 +199,9 @@ BOOL IPureServer::Connect(LPCSTR options)
 	//---------------------------	
 	if (CoCreateInstanceRes != S_OK)
 	{
-		DXTRACE_ERR(tmp, CoCreateInstanceRes );
-		CHK_DX(CoCreateInstanceRes );
+		static char desc_storage[1024] = {};
+		FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, nullptr, CoCreateInstanceRes, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), desc_storage, 0, nullptr);
+		CHK_DX(CoCreateInstanceRes);
 	}	
 	//---------------------------
 	

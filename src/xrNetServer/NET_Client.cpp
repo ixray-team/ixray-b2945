@@ -5,7 +5,6 @@
 
 #pragma warning(push)
 #pragma warning(disable:4995)
-#include "dxerr9.h"
 
 const GUID CLSID_DirectPlay8Client =
 { 0x743f1dc6, 0x5aba, 0x429f, { 0x8b, 0xdf, 0xc5, 0x4d, 0x03, 0x25, 0x3d, 0xc2 } };
@@ -337,8 +336,9 @@ BOOL IPureClient::Connect	(LPCSTR options)
 	//---------------------------	
 	if (CoCreateInstanceRes != S_OK)
 	{
-		DXTRACE_ERR(tmp, CoCreateInstanceRes );
-		CHK_DX(CoCreateInstanceRes );
+		static char desc_storage[1024] = {};
+		FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, nullptr, CoCreateInstanceRes, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), desc_storage, 0, nullptr);
+		CHK_DX(CoCreateInstanceRes);
 	}	
 	//---------------------------
 	
@@ -487,9 +487,8 @@ BOOL IPureClient::Connect	(LPCSTR options)
 					}break;
 				};
 #ifdef DEBUG
-//				const char* x = DXGetErrorString9(res);
-				string1024 tmp = "";
-				DXTRACE_ERR(tmp, res);
+				static char desc_storage[1024] = {};
+				FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, nullptr, res, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), desc_storage, 0, nullptr);
 				Msg("! IPureClient : port %d is BUSY!", c_port);
 #endif
 				c_port++;
@@ -535,9 +534,8 @@ BOOL IPureClient::Connect	(LPCSTR options)
 		net_csEnumeration.Leave		();
 		_RELEASE					(pHostAddress);
 #ifdef DEBUG	
-//		const char* x = DXGetErrorString9(res);
-		string1024 tmp = "";
-		DXTRACE_ERR(tmp, res);
+		static char desc_storage[1024] = {};
+		FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, nullptr, res, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), desc_storage, 0, nullptr);
 #endif
 		switch (res)
 		{
@@ -736,9 +734,9 @@ HRESULT	IPureClient::net_Handler(u32 dwMessageType, PVOID pMessage)
 //					const char* x = DXGetErrorString9(pMsg->hResultCode);
 					if (pMsg->hResultCode != S_OK)
 					{
-						string1024 tmp="";
-						DXTRACE_ERR(tmp, pMsg->hResultCode);
-					}					
+						static char desc_storage[1024] = {};
+						FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, nullptr, pMsg->hResultCode, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), desc_storage, 0, nullptr);
+					}
 #endif
 					if (pMsg->dwApplicationReplyDataSize)
 					{
@@ -825,9 +823,8 @@ void	IPureClient::Send(NET_Packet& P, u32 dwFlags, u32 dwTimeout)
 		);
 	if (FAILED(hr_))	{
 		Msg	("! ERROR: Failed to send net-packet, reason: %s",::Debug.error2string(hr_));
-//		const char* x = DXGetErrorString9(hr_);
-		string1024 tmp="";
-		DXTRACE_ERR(tmp, hr_);
+		static char desc_storage[1024] = {};
+		FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, nullptr, hr_, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), desc_storage, 0, nullptr);
 	}
 
 //	UpdateStatistic();
