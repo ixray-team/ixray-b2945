@@ -231,7 +231,7 @@ void CUIMapList::LoadMapList()
 
 void	CUIMapList::SaveMapList()
 {
-	string256					temp;
+	string_path					temp;
 	FS.update_path				(temp,"$app_data_root$", MAP_ROTATION_LIST);
 
 	if(m_pList2->GetSize()<=1){

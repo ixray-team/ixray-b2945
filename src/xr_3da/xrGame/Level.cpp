@@ -247,7 +247,7 @@ CLevel::~CLevel()
 
 #ifdef DEBUG
 	CInifile					*old_settings = pSettings, *new_settings;
-	string256					file_name;
+	string_path					file_name;
 	FS.update_path				(file_name,"$game_config$","system.ltx");
 	new_settings				= xr_new<CInifile>(file_name);
 	pSettings					= new_settings;

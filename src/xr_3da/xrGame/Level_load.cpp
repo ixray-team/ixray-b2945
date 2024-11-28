@@ -41,7 +41,7 @@ BOOL CLevel::Load_GameSpecific_Before()
 {
 	// AI space
 	pApp->LoadTitle						("Loading AI objects...");
-	string256							fn_game;
+	string_path							fn_game;
 	
 	if (GamePersistent().GameType() == GAME_SINGLE && !ai().get_alife() && FS.exist(fn_game,"$level$","level.ai"))
 		ai().load						(net_SessionName());
@@ -58,7 +58,7 @@ BOOL CLevel::Load_GameSpecific_Before()
 BOOL CLevel::Load_GameSpecific_After()
 {
 	// loading static particles
-	string256		fn_game;
+	string_path		fn_game;
 	if (FS.exist(fn_game, "$level$", "level.ps_static")) {
 		IReader *F = FS.r_open	(fn_game);
 		CParticlesObject* pStaticParticles;

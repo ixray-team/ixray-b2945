@@ -221,7 +221,7 @@ IDirect3DBaseTexture9*	CRender::texture_load(LPCSTR fRName, u32& msize)
 {
 	IDirect3DTexture9*		pTexture2D		= NULL;
 	IDirect3DCubeTexture9*	pTextureCUBE	= NULL;
-	string256				fn;
+	string_path				fn;
 	u32						dwWidth,dwHeight;
 	D3DFORMAT				fmt;
 

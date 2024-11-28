@@ -54,7 +54,7 @@ void game_cl_ArtefactHunt::Init ()
 	old_artefactID = 0;
 	old_teamInPossession = 0;
 	//---------------------------------------------------
-	string256	fn_game;
+	string_path	fn_game;
 	if (FS.exist(fn_game, "$level$", "level.game")) 
 	{
 		IReader *F = FS.r_open	(fn_game);

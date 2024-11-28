@@ -95,7 +95,7 @@ void CRenderDevice::Create	()
 	fFOV				= 90.f;
 	fASPECT				= 1.f;
 
-	string256			fname; 
+	string_path			fname; 
 	FS.update_path		(fname,"$game_data$","shaders.xr");
 
 	//////////////////////////////////////////////////////////////////////////

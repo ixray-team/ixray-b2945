@@ -2393,7 +2393,7 @@ public:
 		}
 
 		string512				name;
-		string512				fn;
+		string_path				fn;
 
 		if (0==strext(arguments))
 			strconcat			(name,arguments,".ogf");

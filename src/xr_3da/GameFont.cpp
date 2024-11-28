@@ -40,7 +40,7 @@ void CGameFont::Initialize		(LPCSTR cShader, LPCSTR cTexture)
 	strings.reserve				(128);
 
 	// check ini exist
-	string256 fn,buf;
+	string_path fn,buf;
 	strcpy		(buf,cTexture); if (strext(buf)) *strext(buf)=0;
 	R_ASSERT2	(FS.exist(fn,"$game_textures$",buf,".ini"),fn);
 	CInifile* ini				= CInifile::Create(fn);

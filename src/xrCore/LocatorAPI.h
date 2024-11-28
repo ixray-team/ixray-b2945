@@ -6,7 +6,14 @@
 #define LocatorAPIH
 #pragma once
 
+#pragma warning(push)
+#pragma warning(disable:4995)
+#include <io.h>
+#pragma warning(pop)
+
 #include "LocatorAPI_defs.h"
+
+class XRCORE_API CStreamReader;
 
 class XRCORE_API CLocatorAPI  
 {
@@ -23,7 +30,7 @@ public:
         u32						modif;			// for editor
 	};
 private:
-	struct	file_pred: public 	std::binary_function<file&, file&, bool> 
+	struct	file_pred
 	{	
 		IC bool operator()	(const file& x, const file& y) const
 		{	return xr_strcmp(x.name,y.name)<0;	}
@@ -40,6 +47,9 @@ private:
 	DEFINE_SET_PRED				(file,files_set,files_it,file_pred);
     DEFINE_VECTOR				(archive,archives_vec,archives_it);
 
+	DEFINE_VECTOR				(_finddata_t,FFVec,FFIt);
+	FFVec						rec_files;
+
     int							m_iLockRescan	; 
     void						rescan_path		(LPCSTR full_path, BOOL bRecurse);
     void						check_pathes	();
@@ -52,7 +62,7 @@ private:
 	u64							m_auth_code		;
 
 	void						Register		(LPCSTR name, u32 vfs, u32 crc, u32 ptr, u32 size_real, u32 size_compressed, u32 modif);
-	void						ProcessArchive	(LPCSTR path);
+	void						ProcessArchive	(LPCSTR path, LPCSTR base_path=NULL);
 	void						ProcessOne		(LPCSTR path, void* F);
 	bool						Recurse			(LPCSTR path);	
 //	bool						CheckExistance	(LPCSTR path);
@@ -68,20 +78,45 @@ public:
 		flTargetFolderOnly		= (1<<5),
 		flCacheFiles			= (1<<6),
 		flScanAppRoot			= (1<<7),
-		flNeedCheck				= (1<<8)
+		flNeedCheck				= (1<<8),
+		flDumpFileActivity		= (1<<9),
 	};    
 	Flags32						m_Flags			;
 	u32							dwAllocGranularity;
 	u32							dwOpenCounter;
+
+private:
+			void				check_cached_files	(LPSTR fname, const file &desc, LPCSTR &source_name);
+
+			void				file_from_cache_impl(IReader *&R, LPSTR fname, const file &desc);
+			void				file_from_cache_impl(CStreamReader *&R, LPSTR fname, const file &desc);
+	template <typename T>
+			void				file_from_cache		(T *&R, LPSTR fname, const file &desc, LPCSTR &source_name);
+			
+			void				file_from_archive	(IReader *&R, LPCSTR fname, const file &desc);
+			void				file_from_archive	(CStreamReader *&R, LPCSTR fname, const file &desc);
+
+			void				copy_file_to_build	(IWriter *W, IReader *r);
+			void				copy_file_to_build	(IWriter *W, CStreamReader *r);
+	template <typename T>
+			void				copy_file_to_build	(T *&R, LPCSTR source_name);
+
+			bool				check_for_file		(LPCSTR path, LPCSTR _fname, string_path& fname, const file *&desc);
+	
+	template <typename T>
+	IC		T					*r_open_impl		(LPCSTR path, LPCSTR _fname);
+			void				ProcessExternalArch	();
 public:
 								CLocatorAPI		();
 								~CLocatorAPI	();
 	void						_initialize		(u32 flags, LPCSTR target_folder=0, LPCSTR fs_name=0);
 	void						_destroy		();
 
+	CStreamReader*				rs_open			(LPCSTR initial, LPCSTR N);
 	IReader*					r_open			(LPCSTR initial, LPCSTR N);
 	IC IReader*					r_open			(LPCSTR N){return r_open(0,N);}
 	void						r_close			(IReader* &S);
+	void						r_close			(CStreamReader* &fs);
 
 	IWriter*					w_open			(LPCSTR initial, LPCSTR N);
 	IC IWriter*					w_open			(LPCSTR N){return w_open(0,N);}
@@ -91,8 +126,8 @@ public:
 
 	const file*					exist			(LPCSTR N);
 	const file*					exist			(LPCSTR path, LPCSTR name);
-	const file*					exist			(LPSTR fn, LPCSTR path, LPCSTR name);
-	const file*					exist			(LPSTR fn, LPCSTR path, LPCSTR name, LPCSTR ext);
+	const file*					exist			(string_path& fn, LPCSTR path, LPCSTR name);
+	const file*					exist			(string_path& fn, LPCSTR path, LPCSTR name, LPCSTR ext);
 
     BOOL 						can_write_to_folder	(LPCSTR path); 
     BOOL 						can_write_to_alias	(LPCSTR path); 
@@ -117,10 +152,10 @@ public:
     bool						path_exist			(LPCSTR path);
     FS_Path*					get_path			(LPCSTR path);
     FS_Path*					append_path			(LPCSTR path_alias, LPCSTR root, LPCSTR add, BOOL recursive);
-    LPCSTR						update_path			(LPSTR dest, LPCSTR initial, LPCSTR src);
+    LPCSTR						update_path			(string_path& dest, LPCSTR initial, LPCSTR src);
 
 	int							file_list			(FS_FileSet& dest, LPCSTR path, u32 flags=FS_ListFiles, LPCSTR mask=0);
-    void						update_path			(xr_string& dest, LPCSTR initial, LPCSTR src);
+//.    void						update_path			(xr_string& dest, LPCSTR initial, LPCSTR src);
 
 	// 
 	void						register_archieve	(LPCSTR path);

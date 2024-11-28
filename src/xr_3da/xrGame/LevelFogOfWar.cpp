@@ -61,7 +61,7 @@ void CLevelFogOfWar::Init	(const shared_str& level)
 
 	m_level_name		= level;
 
-	string256			gameLtxPath;
+	string_path			gameLtxPath;
 	FS.update_path		(gameLtxPath, "$game_config$", "game.ltx");
 	CInifile gameLtx	(gameLtxPath);
 

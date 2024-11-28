@@ -214,7 +214,11 @@ void xrDebug::backend(const char *expression, const char *description, const cha
 			ignore_always	= true;
 			break;
 		}
-		default : NODEFAULT;
+		default: 
+		{
+			Msg("! xrDebug::backend default reached");
+			break;
+		}
 	}
 #endif
 
@@ -295,7 +299,7 @@ extern LPCSTR log_name();
 
 void CALLBACK PreErrorHandler	(INT_PTR)
 {
-	string256				log_folder;
+	string_path				log_folder;
 	FS.update_path			(log_folder,"$logs$","");
 	if ((log_folder[0] != '\\') && (log_folder[1] != ':')) {
 		string256			current_folder;
@@ -535,3 +539,10 @@ LONG WINAPI UnhandledFilter	(_EXCEPTION_POINTERS *pExceptionInfo)
 		previous_filter					= ::SetUnhandledExceptionFilter(UnhandledFilter);	// exception handler to all "unhandled" exceptions
 	}
 #endif
+
+	void xrDebug::do_exit(const std::string &message)
+	{
+		FlushLog();
+		MessageBox(NULL, message.c_str(), "Error", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
+		TerminateProcess(GetCurrentProcess(), 1);
+	}

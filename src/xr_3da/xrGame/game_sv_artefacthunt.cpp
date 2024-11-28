@@ -40,7 +40,7 @@ void	game_sv_ArtefactHunt::Create					(shared_str& options)
 	ArtefactsRPoints_ID.clear();
 	Artefact_rpoints.clear();
 
-	string256	fn_game;
+	string_path	fn_game;
 	if (FS.exist(fn_game, "$level$", "level.game")) 
 	{
 		IReader *F = FS.r_open	(fn_game);

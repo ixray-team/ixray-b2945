@@ -302,7 +302,7 @@ void game_sv_GameState::OnPlayerDisconnect		(ClientID /**id_who/**/, LPSTR, u16 
 static float							rpoints_Dist [TEAM_COUNT] = {1000.f, 1000.f, 1000.f, 1000.f};
 void game_sv_GameState::Create					(shared_str &options)
 {
-	string256	fn_game;	
+	string_path	fn_game;	
 	if (FS.exist(fn_game, "$level$", "level.game")) 
 	{
 		IReader *F = FS.r_open	(fn_game);
@@ -362,7 +362,7 @@ void game_sv_GameState::Create					(shared_str &options)
 
 	// loading scripts
 	ai().script_engine().remove_script_process(ScriptEngine::eScriptProcessorGame);
-	string256					S;
+	string_path					S;
 	FS.update_path				(S,"$game_config$","script.ltx");
 	CInifile					*l_tpIniFile = xr_new<CInifile>(S);
 	R_ASSERT					(l_tpIniFile);

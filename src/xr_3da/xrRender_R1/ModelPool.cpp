@@ -98,7 +98,7 @@ IRender_Visual*	CModelPool::Instance_Duplicate	(IRender_Visual* V)
 IRender_Visual*	CModelPool::Instance_Load		(const char* N, BOOL allow_register)
 {
 	IRender_Visual	*V;
-	string512		fn;
+	string_path		fn;
 	string512		name;
 
 	// Add default ext if no ext at all

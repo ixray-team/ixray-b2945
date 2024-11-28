@@ -207,7 +207,7 @@ public:
 
 	virtual void	Execute	(LPCSTR args)	{
 		CCC_Token::Execute	(args);
-		string128		_cfg;
+		string_path		_cfg;
 		string_path		cmd;
 		
 		switch	(*value)	{

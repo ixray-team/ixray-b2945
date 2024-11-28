@@ -57,7 +57,7 @@ void CUIMapInfo::InitMap(const char* map_name){
 
 	if (FS.exist("$game_config$", info_path.c_str()))
 	{
-		string256 ltxPath;
+		string_path ltxPath;
 		FS.update_path	(ltxPath, CONFIG_PATH, info_path.c_str());
 		CInifile ltx	(ltxPath);
 		xr_string text;

@@ -371,7 +371,7 @@ Fbox get_bounding_volume()
 void iterate_sounds					(LPCSTR prefix, u32 max_count, const CScriptCallbackEx<void> &callback)
 {
 	for (int j=0, N = _GetItemCount(prefix); j<N; ++j) {
-		string256					fn, s;
+		string_path					fn, s;
 		LPSTR						S = (LPSTR)&s;
 		_GetItem					(prefix,j,S);
 		if (FS.exist(fn,"$game_sounds$",S,".ogg"))

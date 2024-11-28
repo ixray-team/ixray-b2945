@@ -15,7 +15,7 @@ IC CGameGraph::CGameGraph											(LPCSTR file_name, u32 current_version)
 #endif
 {
 #ifndef AI_COMPILER
-	string256					file_name;
+	string_path					file_name;
 	FS.update_path				(file_name,"$game_data$",GRAPH_NAME);
 #endif
 	m_reader					= FS.r_open(file_name);

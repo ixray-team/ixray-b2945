@@ -122,11 +122,11 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 		if (0!=strstr(Params,"-build"))	 flags |= CLocatorAPI::flBuildCopy;
 		if (0!=strstr(Params,"-ebuild")) flags |= CLocatorAPI::flBuildCopy|CLocatorAPI::flEBuildCopy;
 #ifdef	DEBUG
-		if (0==strstr(Params,"-nocache"))flags |= CLocatorAPI::flCacheFiles;
+		if (strstr(Params, "-cache"))  flags |= CLocatorAPI::flCacheFiles;
+		else flags &= ~CLocatorAPI::flCacheFiles;
 #endif
-#ifdef	_EDITOR // for EDITORS - no cache
-		flags 				&=~ CLocatorAPI::flCacheFiles;
-#endif
+		flags |= CLocatorAPI::flScanAppRoot;
+
 		FS._initialize		(flags,0,fs_fname);
 		EFS._initialize		();
 	}

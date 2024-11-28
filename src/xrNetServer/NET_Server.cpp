@@ -708,7 +708,7 @@ void			IPureServer::BannedAddress_Save	(u32 it, IWriter* fs)
 
 void			IPureServer::BannedList_Save	()
 {
-	string256					temp;
+	string_path					temp;
 	FS.update_path				(temp,"$app_data_root$", BANNED_LIST);
 	IWriter*		fs	= FS.w_open(temp);
 	for	(u32 it=0; it<BannedAddresses.size(); it++)

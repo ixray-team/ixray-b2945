@@ -40,7 +40,8 @@ void				game_cl_mp::AddMessageMenu			(LPCSTR	menu_section, LPCSTR snd_path, LPCS
 		//---------------------------------------------------------
 		for (u32 s=1; s<=16; s++)
 		{
-			string4096 FileName_Voice, FileName_Radio, fn;
+			string4096 FileName_Voice, FileName_Radio;
+			string_path fn;
 			sprintf(FileName_Voice, "%s%s%d\\voice_%s%d", snd_path, team_prefix, 1, SoundName, s);
 			if (!FS.exist(fn,"$game_sounds$",FileName_Voice,".ogg")) break;
 			

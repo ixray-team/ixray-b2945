@@ -327,7 +327,7 @@ public:
 			Log		("! Please disconnect/unload first");
 			return	;
 		}
-		string256	fn;
+		string_path	fn;
 		if (FS.exist(fn,"",args,".save"))
 		{
 			Engine.Event.Defer("KERNEL:server_load",u64(xr_strdup(fn)));

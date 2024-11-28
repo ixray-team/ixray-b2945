@@ -175,7 +175,7 @@ SVS*	CResourceManager::_CreateVS		(LPCSTR _name)
 		LPD3DXBUFFER				pErrorBuf	= NULL;
 		LPD3DXSHADER_CONSTANTTABLE	pConstants	= NULL;
 		HRESULT						_hr			= S_OK;
-		string256					cname;
+		string_path					cname;
 		FS.update_path				(cname,	"$game_shaders$", strconcat(cname,::Render->getShaderPath(),_name,".vs"));
 //		LPCSTR						target		= NULL;
 
@@ -262,7 +262,7 @@ SPS*	CResourceManager::_CreatePS			(LPCSTR name)
 
 		// Open file
 		includer					Includer;
-		string256					cname;
+		string_path					cname;
 		FS.update_path				(cname,	"$game_shaders$", strconcat(cname,::Render->getShaderPath(),name,".ps"));
 
 		// duplicate and zero-terminate
@@ -309,10 +309,21 @@ SPS*	CResourceManager::_CreatePS			(LPCSTR name)
 			}
 			else	_hr = E_FAIL;
 		}
+		else
+		{
+			Msg("error is %s", (LPCSTR)pErrorBuf->GetBufferPointer());
+		}
 		_RELEASE		(pShaderBuf);
 		_RELEASE		(pErrorBuf);
 		pConstants		= NULL;
-		R_CHK			(_hr);
+
+		if (FAILED(_hr))
+			Msg("Can't compile shader %s", name);
+
+		CHECK_OR_EXIT(
+			!FAILED(_hr),
+			make_string("Your video card doesn't meet game requirements\n\nPixel Shaders v1.1 or higher required")
+			);
 		return			_ps;
 	}
 }

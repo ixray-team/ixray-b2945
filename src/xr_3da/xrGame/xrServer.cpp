@@ -630,7 +630,7 @@ void		xrServer::OnChatMessage(NET_Packet* P, xrClientData* CL)
 
 void		xrServer::BannedList_Load		()
 {
-	string256					temp = "";
+	string_path					temp = "";
 	FS.update_path				(temp,"$app_data_root$", GetBannedListName());
 	Console->ExecuteScript(temp);
 }

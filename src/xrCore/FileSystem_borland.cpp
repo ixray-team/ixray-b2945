@@ -13,19 +13,24 @@
 
 bool EFS_Utils::GetOpenName(LPCSTR initial, xr_string& buffer, bool bMulti, LPCSTR offset, int start_flt_ext )
 {
-	string4096 buf;
-	strcpy(buf,buffer.c_str());
-	bool bRes = GetOpenName(initial,buf,sizeof(buf),bMulti,offset,start_flt_ext);
-	if (bRes) buffer=(char*)buf;
+	string_path		buf;
+	strcpy			(buf,buffer.c_str());
+	bool bRes		= GetOpenName(initial,buf,sizeof(buf),bMulti,offset,start_flt_ext);
+
+	if (bRes) 
+		buffer=(char*)buf;
+
 	return bRes;
 }
 
 bool EFS_Utils::GetSaveName( LPCSTR initial, xr_string& buffer, LPCSTR offset, int start_flt_ext )
 {
-	string4096 buf;
-	strcpy(buf,buffer.c_str());
-	bool bRes = GetSaveName(initial,buf,sizeof(buf),offset,start_flt_ext);
-	if (bRes) buffer=buf;
+	string_path				buf;
+	strcpy_s				(buf,sizeof(buf), buffer.c_str());
+	bool bRes				= GetSaveName(initial,buf,offset,start_flt_ext);
+	if (bRes) 
+		buffer				= buf;
+
 	return bRes;
 }
 //----------------------------------------------------
@@ -76,7 +81,7 @@ BOOL EFS_Utils::LockFile(LPCSTR fname, bool bLog)
 		HANDLE handle=CreateFile(fn,GENERIC_READ|GENERIC_WRITE,FILE_SHARE_READ,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,0);
 		if (INVALID_HANDLE_VALUE!=handle){
 			LPSTR lp_fn			= fn;
-			std::pair<HANDLEPairIt, bool> I=m_LockFiles.insert(mk_pair(lp_fn,handle));
+			std::pair<HANDLEPairIt, bool> I=m_LockFiles.insert(std::make_pair(lp_fn,handle));
 			R_ASSERT(			I.second);
 /*            
 			// register access              LockFile
@@ -131,21 +136,27 @@ BOOL EFS_Utils::UnlockFile(LPCSTR fname, bool bLog)
 
 void EFS_Utils::WriteAccessLog(LPCSTR fn, LPCSTR start_msg)
 {
+/*
 	string1024		buf;
 	string256		dt_buf, tm_buf;
 	sprintf			(buf, "%s:   '%s' from computer: '%s' by user: '%s' at %s %s",start_msg,fn,Core.CompName,Core.UserName,_strdate(dt_buf),_strtime(tm_buf));
 	xr_string		m_AccessLog;
-	FS.update_path	(m_AccessLog,"$server_data_root$","access.log");
-	int hf 			= open( m_AccessLog.c_str(), _O_WRONLY|_O_APPEND|_O_BINARY );
-	if( hf<=0 )
-		hf = open( m_AccessLog.c_str(),
-		_O_WRONLY|_O_CREAT|_O_TRUNC| _O_BINARY,
-		_S_IREAD | _S_IWRITE );
 
-	_write( hf, buf, xr_strlen(buf) );
-    char el[2]={0x0d,0x0a};
-	_write( hf, el, 2 );
-	_close( hf );
+    if(FS.path_exist("$server_data_root$"))
+    {
+        FS.update_path	(m_AccessLog,"$server_data_root$","access.log");
+        int hf 			= open( m_AccessLog.c_str(), _O_WRONLY|_O_APPEND|_O_BINARY );
+        if( hf<=0 )
+            hf = open( m_AccessLog.c_str(),
+            _O_WRONLY|_O_CREAT|_O_TRUNC| _O_BINARY,
+            _S_IREAD | _S_IWRITE );
+
+        _write( hf, buf, xr_strlen(buf) );
+        char el[2]={0x0d,0x0a};
+        _write( hf, el, 2 );
+        _close( hf );
+    }
+*/
 }
 /*
 shared_str EFS_Utils::GetLockOwner(LPCSTR initial, LPCSTR fname)

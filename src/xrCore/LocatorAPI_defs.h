@@ -1,6 +1,8 @@
 #ifndef LocatorAPI_defsH
 #define LocatorAPI_defsH
 
+#pragma once
+
 enum FS_List
 {
 	FS_ListFiles	=(1<<0),
@@ -28,9 +30,10 @@ public:
 public:
 				FS_Path		(LPCSTR _Root, LPCSTR _Add, LPCSTR _DefExt=0, LPCSTR _FilterString=0, u32 flags=0);
 				~FS_Path	();
-	LPCSTR		_update		(LPSTR dest, LPCSTR src) const;
-	void		_update		(xr_string& dest, LPCSTR src) const;
+	LPCSTR		_update		(string_path& dest, LPCSTR src) const;
+//.	void		_update		(xr_string& dest, LPCSTR src) const;
 	void		_set		(LPSTR add);
+	void		_set_root	(LPSTR root);
 
     void __stdcall rescan_path_cb	();
 };

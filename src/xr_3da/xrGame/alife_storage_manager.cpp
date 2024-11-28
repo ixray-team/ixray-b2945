@@ -57,7 +57,7 @@ void CALifeStorageManager::save	(LPCSTR save_name, bool update_name)
 		dest_count				= rtc_compress(dest_data,dest_count,source_data,source_count);
 	}
 
-	string256					temp;
+	string_path					temp;
 	FS.update_path				(temp,"$game_saves$",m_save_name);
 	IWriter						*writer = FS.w_open(temp);
 	writer->w_u32				(source_count);
@@ -82,7 +82,7 @@ bool CALifeStorageManager::load	(LPCSTR save_name)
 	}
 	else
 		strconcat				(m_save_name,save_name,SAVE_EXTENSION);
-	string256					file_name;
+	string_path					file_name;
 	FS.update_path				(file_name,"$game_saves$",m_save_name);
 
 	IReader						*stream;

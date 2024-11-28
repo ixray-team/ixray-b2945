@@ -199,6 +199,12 @@
       <Filter>shared memory/string library</Filter>
     </ClCompile>
     <ClCompile Include="xrSyncronize.cpp" />
+    <ClCompile Include="file_stream_reader.cpp">
+      <Filter>FS</Filter>
+    </ClCompile>
+    <ClCompile Include="stream_reader.cpp">
+      <Filter>FS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FTimer.h">
@@ -442,6 +448,15 @@
       <Filter>intrusive_ptr</Filter>
     </ClInclude>
     <ClInclude Include="xrSyncronize.h" />
+    <ClInclude Include="file_stream_reader.h">
+      <Filter>FS</Filter>
+    </ClInclude>
+    <ClInclude Include="stream_reader.h">
+      <Filter>FS</Filter>
+    </ClInclude>
+    <ClInclude Include="stream_reader_inline.h">
+      <Filter>FS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="xrCore.rc">

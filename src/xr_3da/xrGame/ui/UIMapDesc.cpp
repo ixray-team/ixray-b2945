@@ -64,7 +64,7 @@ void CUIMapDesc::Init(){
 	// init map picture
 	CUIXmlInit::InitStatic		(xml_doc,"map_desc:image",			0,	m_pImage);
 
-	string256								gameLtxPath;
+	string_path								gameLtxPath;
 	FS.update_path							(gameLtxPath, CONFIG_PATH, "game.ltx");
 	CInifile gameLtx						(gameLtxPath);
 

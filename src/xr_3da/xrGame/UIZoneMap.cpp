@@ -29,7 +29,7 @@ CUIZoneMap::~CUIZoneMap()
 
 void CUIZoneMap::Init()
 {
-	string256			gameLtxPath;
+	string_path			gameLtxPath;
 	FS.update_path		(gameLtxPath, CONFIG_PATH, "game.ltx");
 	CInifile			gameLtx		(gameLtxPath);
 

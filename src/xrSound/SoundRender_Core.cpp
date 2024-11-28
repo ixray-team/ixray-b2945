@@ -119,7 +119,7 @@ void CSoundRender_Core::pause_emitters(bool val)
 void CSoundRender_Core::env_load	()
 {
 	// Load environment
-	string256					fn;
+	string_path					fn;
 	if (FS.exist(fn,"$game_data$",SNDENV_FILENAME))
 	{
 		s_environment				= xr_new<SoundEnvironment_LIB>();

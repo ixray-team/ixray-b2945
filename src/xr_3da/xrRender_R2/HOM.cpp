@@ -51,7 +51,7 @@ IC float	Area		(Fvector& v0, Fvector& v1, Fvector& v2)
 void CHOM::Load			()
 {
 	// Find and open file
-	string256		fName;
+	string_path		fName;
 	FS.update_path	(fName,"$level$","level.hom");
 	if (!FS.exist(fName))
 	{

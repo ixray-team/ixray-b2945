@@ -127,7 +127,7 @@ void	CResourceManager::OnDeviceCreate	(IReader* F)
 	}
 
 	// Load detail textures association
-	string256		fname;		
+	string_path		fname;		
 	FS.update_path	(fname,"$game_textures$","textures.ltx");
 	LPCSTR	Iname	= fname;
 	if (FS.exist(Iname))

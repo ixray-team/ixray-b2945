@@ -278,7 +278,7 @@ void CALifeUpdateManager::reload		(LPCSTR section)
 bool CALifeUpdateManager::load_game		(LPCSTR game_name, bool no_assert)
 {
 	{
-		string256				temp,file_name;
+		string_path				temp,file_name;
 		strconcat				(temp,game_name,SAVE_EXTENSION);
 		FS.update_path			(file_name,"$game_saves$",temp);
 		if (!FS.exist(file_name)) {
